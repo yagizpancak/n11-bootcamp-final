@@ -2,12 +2,14 @@ package com.n11.restaurantservice.controller;
 
 import com.n11.restaurantservice.controller.contract.RestaurantControllerContract;
 import com.n11.restaurantservice.dto.RestaurantDTO;
+import com.n11.restaurantservice.dto.RestaurantDistanceDTO;
 import com.n11.restaurantservice.general.RestResponse;
 import com.n11.restaurantservice.request.RestaurantSaveRequest;
 import com.n11.restaurantservice.request.RestaurantUpdateRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -29,6 +31,13 @@ public class RestaurantController {
 	public ResponseEntity<RestResponse<RestaurantDTO>> findById(@PathVariable String id){
 		RestaurantDTO restaurant = restaurantControllerContract.getRestaurantById(id);
 		return ResponseEntity.ok(RestResponse.of(restaurant));
+	}
+
+	@GetMapping("/distance-lt")
+	public ResponseEntity<RestResponse<List<RestaurantDistanceDTO>>> getRestaurantByDistanceLt(@RequestParam BigDecimal latitude,
+																					  @RequestParam BigDecimal longitude){
+		List<RestaurantDistanceDTO> restaurants = restaurantControllerContract.findByDistanceLessThan(latitude, longitude);
+		return ResponseEntity.ok(RestResponse.of(restaurants));
 	}
 
 	@PutMapping

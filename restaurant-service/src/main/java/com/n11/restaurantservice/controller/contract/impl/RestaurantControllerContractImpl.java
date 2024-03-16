@@ -2,6 +2,7 @@ package com.n11.restaurantservice.controller.contract.impl;
 
 import com.n11.restaurantservice.controller.contract.RestaurantControllerContract;
 import com.n11.restaurantservice.dto.RestaurantDTO;
+import com.n11.restaurantservice.dto.RestaurantDistanceDTO;
 import com.n11.restaurantservice.entity.Restaurant;
 import com.n11.restaurantservice.mapper.RestaurantMapper;
 import com.n11.restaurantservice.request.RestaurantSaveRequest;
@@ -10,6 +11,7 @@ import com.n11.restaurantservice.service.RestaurantEntityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -46,5 +48,10 @@ public class RestaurantControllerContractImpl implements RestaurantControllerCon
 	@Override
 	public void deleteRestaurant(String id) {
 		restaurantEntityService.delete(id);
+	}
+
+	@Override
+	public List<RestaurantDistanceDTO> findByDistanceLessThan(BigDecimal latitude, BigDecimal longitude) {
+		return restaurantEntityService.findByDistanceLessThan(latitude, longitude);
 	}
 }

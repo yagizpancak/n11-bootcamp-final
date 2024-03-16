@@ -11,9 +11,11 @@ import org.springframework.data.solr.repository.config.EnableSolrRepositories;
 
 @Configuration
 @EnableSolrRepositories(
-		basePackages = "com.n11.restaurantservice"
+		basePackages = "com.n11.restaurantservice",
+		schemaCreationSupport = true
 )
 @ComponentScan
+
 public class SolrConfig {
 	@Value("${solr.url}")
 	private String solrURL;

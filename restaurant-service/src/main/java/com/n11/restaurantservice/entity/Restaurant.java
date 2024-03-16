@@ -3,7 +3,6 @@ package com.n11.restaurantservice.entity;
 import lombok.Getter;
 import lombok.Setter;
 import nonapi.io.github.classgraph.json.Id;
-import org.apache.solr.client.solrj.beans.Field;
 import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
 
@@ -15,13 +14,10 @@ public class Restaurant {
 	@Indexed(name = "id", type = "string")
 	private String id;
 
-	@Field
+	@Indexed(name = "name", type = "string")
 	private String name;
 
-	@Field
-	private String latitude;
-
-	@Field
-	private String longitude;
+	@Indexed(name = "coordinate", type = "location")
+	private String coordinate;
 
 }
