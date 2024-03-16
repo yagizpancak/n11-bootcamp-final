@@ -3,4 +3,4 @@ spring:
     name: restaurant-service
 
 solr:
-  url: "http://localhost:8983/solr"
+  url: "http://solr:8983/solr"

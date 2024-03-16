@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.restaurant
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
     networks:
       default:
     ports:
