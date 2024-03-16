@@ -5,7 +5,8 @@ import lombok.Getter;
 
 @Getter
 public enum ErrorMessage implements BaseErrorMessage {
-	ITEM_NOT_FOUND("Item not found!");
+	ITEM_NOT_FOUND("Item not found!"),
+	RESTAURANT_NOT_FOUND("Restaurant not found!");
 
 	private final String message;
 
