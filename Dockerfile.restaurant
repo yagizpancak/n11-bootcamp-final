@@ -1,0 +1,16 @@
+FROM eclipse-temurin:17-jdk-jammy AS base
+WORKDIR /app
+COPY restaurant-service/.mvn/ .mvn
+COPY restaurant-service/mvnw restaurant-service/pom.xml ./
+RUN ./mvnw dependency:resolve
+COPY restaurant-service/src ./src
+
+
+FROM base AS build
+RUN ./mvnw package
+
+
+FROM eclipse-temurin:17-jre-jammy AS production
+EXPOSE 8080
+COPY --from=build /app/target/restaurant-service-*.jar /restaurant-service.jar
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/restaurant-service.jar"]

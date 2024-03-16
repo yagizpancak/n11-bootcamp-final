@@ -1,0 +1,24 @@
+version: '3'
+services:
+  restaurant-service:
+    container_name: restaurant-service
+    build:
+      context: .
+      dockerfile: Dockerfile.restaurant
+    networks:
+      default:
+    ports:
+      - "8080:8080"
+
+  solr:
+    image: solr:latest
+    container_name: n11_solr
+    networks:
+      default:
+    ports:
+      - "8983:8983"
+    volumes:
+      - ./restaurant-service/data:/var/solr
+    command:
+      - solr-precreate
+      - n11_restaurants
