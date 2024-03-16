@@ -54,4 +54,8 @@ public abstract class BaseEntityService<E extends BaseEntity, R extends JpaRepos
 	public List<E> findAll(){
 		return repository.findAll();
 	}
+
+	public void delete(Long id){
+		repository.deleteById(id);
+	}
 }

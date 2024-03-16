@@ -29,4 +29,7 @@ public class RestResponse<T> {
 		return new RestResponse<>(data, false);
 	}
 
+	public static <T> RestResponse<T> empty(){
+		return new RestResponse<>(null, true);
+	}
 }
