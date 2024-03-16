@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: restaurant-service
+
+solr:
+  url: "http://solr:8983/solr"
