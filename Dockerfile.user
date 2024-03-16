@@ -1,0 +1,16 @@
+FROM eclipse-temurin:17-jdk-jammy AS base
+WORKDIR /app
+COPY user-service/.mvn/ .mvn
+COPY user-service/mvnw user-service/pom.xml ./
+RUN ./mvnw dependency:resolve
+COPY user-service/src ./src
+
+
+FROM base AS build
+RUN ./mvnw package -DskipTests
+
+
+FROM eclipse-temurin:17-jre-jammy AS production
+EXPOSE 8081
+COPY --from=build /app/target/user-service-*.jar /user-service.jar
+CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/user-service.jar"]

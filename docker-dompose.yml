@@ -9,6 +9,41 @@ services:
       default:
     ports:
       - "8080:8080"
+    depends_on:
+      - solr
+
+  user-service:
+    container_name: user-service
+    build:
+      context: .
+      dockerfile: Dockerfile.user
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      default:
+    ports:
+      - "8081:8081"
+    depends_on:
+      - user_db
+    restart:
+      on-failure
+
+  user_db:
+    container_name: user_db
+    image: postgres
+    environment:
+      POSTGRES_DB: bootcamp
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      PGDATA: /data/postgres
+    networks:
+      default:
+    expose:
+      - "5431"
+    ports:
+      - "5431:5431"
+    command: -p 5431
+    restart: always
 
   solr:
     image: solr:latest
