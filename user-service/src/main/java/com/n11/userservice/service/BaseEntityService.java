@@ -4,15 +4,12 @@ import com.n11.userservice.errormessage.ErrorMessage;
 import com.n11.userservice.exception.ItemNotFoundException;
 import com.n11.userservice.general.BaseAdditionalFields;
 import com.n11.userservice.general.BaseEntity;
-import lombok.Getter;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-
-@Getter
 public abstract class BaseEntityService<E extends BaseEntity, R extends JpaRepository<E, Long>> {
 	private final R repository;
 

@@ -1,5 +1,6 @@
 package com.n11.userservice.service;
 
+import com.n11.userservice.client.ClientResponse;
 import com.n11.userservice.client.RestaurantClient;
 import com.n11.userservice.dao.ReviewRepository;
 import com.n11.userservice.dto.RestaurantDistanceDTO;
@@ -23,8 +24,8 @@ public class SuggestionService {
 
 
 	public List<RestaurantSuggestDTO> getSuggestion(User user) {
-		List<RestaurantDistanceDTO> restaurants =
-				restaurantClient.findByDistanceLessThan(user.getLatitude(), user.getLongitude()).getData();
+		ClientResponse<List<RestaurantDistanceDTO>> response = restaurantClient.findByDistanceLessThan(user.getLatitude(), user.getLongitude());
+		List<RestaurantDistanceDTO> restaurants = response.getData();
 
 		return restaurants.stream()
 				.map(restaurant -> {
@@ -45,7 +46,7 @@ public class SuggestionService {
 	}
 
 	private BigDecimal findTotalPoint(BigDecimal reviewPoint, BigDecimal distance) {
-		return BigDecimal.valueOf(reviewPoint.doubleValue()*0.7 + (10-distance.doubleValue())*0.3);
+		return BigDecimal.valueOf((reviewPoint.doubleValue()*20)*0.7 + ((10-distance.doubleValue())*10)*0.3);
 	}
 
 	private BigDecimal findReviewPoint(String id){
