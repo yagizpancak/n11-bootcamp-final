@@ -9,6 +9,7 @@ import com.n11.userservice.dao.UserRepository;
 import com.n11.userservice.dto.RestaurantDistanceDTO;
 import com.n11.userservice.entity.User;
 import com.n11.userservice.enums.UserGender;
+import com.n11.userservice.general.KafkaProducerService;
 import com.n11.userservice.request.UserUpdateRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,6 +48,9 @@ class UserControllerTest extends BaseControllerTest{
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@MockBean
+	private KafkaProducerService kafka;
 
 	@BeforeEach
 	void setUp() {

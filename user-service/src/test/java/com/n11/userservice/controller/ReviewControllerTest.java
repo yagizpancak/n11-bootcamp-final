@@ -11,6 +11,7 @@ import com.n11.userservice.dto.RestaurantDTO;
 import com.n11.userservice.entity.Review;
 import com.n11.userservice.entity.User;
 import com.n11.userservice.enums.UserGender;
+import com.n11.userservice.general.KafkaProducerService;
 import com.n11.userservice.request.ReviewEditCommentRequest;
 import com.n11.userservice.request.ReviewEditScoreRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,6 +45,9 @@ class ReviewControllerTest extends BaseControllerTest{
 
 	@MockBean
 	private RestaurantClient restaurantClient;
+
+	@MockBean
+	private KafkaProducerService kafka;
 
 	@Autowired
 	private UserRepository userRepository;
