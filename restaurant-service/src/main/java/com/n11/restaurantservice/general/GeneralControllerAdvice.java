@@ -2,6 +2,7 @@ package com.n11.restaurantservice.general;
 
 
 import com.n11.restaurantservice.exception.ItemNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -14,7 +15,9 @@ import java.time.LocalDateTime;
 
 @ControllerAdvice
 @RestController
+@RequiredArgsConstructor
 public class GeneralControllerAdvice extends ResponseEntityExceptionHandler {
+	private final KafkaProducerService kafkaProducerService;
 
 	@ExceptionHandler
 	public final ResponseEntity<Object> handleAllExceptions(Exception e, WebRequest request) {
@@ -24,6 +27,8 @@ public class GeneralControllerAdvice extends ResponseEntityExceptionHandler {
 
 		var generalErrorMessages = new GeneralErrorMessages(LocalDateTime.now(), message, description);
 		var restResponse = RestResponse.error(generalErrorMessages);
+
+		kafkaProducerService.sendMessage("errorLog", message);
 
 		return new ResponseEntity<>(restResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
@@ -36,6 +41,8 @@ public class GeneralControllerAdvice extends ResponseEntityExceptionHandler {
 
 		var generalErrorMessages = new GeneralErrorMessages(LocalDateTime.now(), message, description);
 		var restResponse = RestResponse.error(generalErrorMessages);
+
+		kafkaProducerService.sendMessage("errorLog", message);
 
 		return new ResponseEntity<>(restResponse, HttpStatus.NOT_FOUND);
 	}

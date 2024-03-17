@@ -1,9 +1,6 @@
 package com.n11.userservice.dto;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -11,6 +8,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @EqualsAndHashCode
+@ToString
 public class RestaurantSuggestDTO {
 	private String id;
 	private String name;

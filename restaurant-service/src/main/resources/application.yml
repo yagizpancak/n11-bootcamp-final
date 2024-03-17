@@ -6,3 +6,8 @@ solr:
   url: "http://localhost:8983/solr"
   search:
     distance: 10
+
+spring.kafka.producer:
+  bootstrap-servers: localhost:9092
+  key-serializer: org.apache.kafka.common.serialization.StringSerializer
+  value-serializer: org.apache.kafka.common.serialization.StringSerializer

@@ -3,6 +3,7 @@ package com.n11.userservice.controller.contract.impl;
 import com.n11.userservice.controller.contract.ReviewControllerContract;
 import com.n11.userservice.dto.ReviewDTO;
 import com.n11.userservice.entity.Review;
+import com.n11.userservice.general.KafkaProducerService;
 import com.n11.userservice.mapper.ReviewMapper;
 import com.n11.userservice.request.ReviewEditCommentRequest;
 import com.n11.userservice.request.ReviewEditScoreRequest;
@@ -17,9 +18,12 @@ import java.util.List;
 @Service
 public class ReviewControllerContractImpl implements ReviewControllerContract {
 	private final ReviewService reviewService;
+	private final KafkaProducerService kafkaProducerService;
 	@Override
 	public List<ReviewDTO> getAllReviews() {
 		List<Review> reviewList = reviewService.findAll();
+
+		kafkaProducerService.sendMessage("infoLog", reviewList.toString());
 		return reviewService.mapToReviewDTOs(reviewList);
 	}
 
@@ -27,6 +31,7 @@ public class ReviewControllerContractImpl implements ReviewControllerContract {
 	public ReviewDTO getReviewById(Long id) {
 		Review review = reviewService.findByIdWithControl(id);
 
+		kafkaProducerService.sendMessage("infoLog", review.toString());
 		return reviewService.mapToReviewDTO(review);
 	}
 
@@ -34,6 +39,8 @@ public class ReviewControllerContractImpl implements ReviewControllerContract {
 	public ReviewDTO saveReview(ReviewSaveRequest reviewSaveRequest) {
 		Review review = ReviewMapper.INSTANCE.convertToReview(reviewSaveRequest);
 		review = reviewService.save(review);
+
+		kafkaProducerService.sendMessage("infoLog", review.toString());
 		return reviewService.mapToReviewDTO(review);
 	}
 
@@ -42,6 +49,8 @@ public class ReviewControllerContractImpl implements ReviewControllerContract {
 		Review review = reviewService.findByIdWithControl(id);
 		review.setText(request.text());
 		review = reviewService.save(review);
+
+		kafkaProducerService.sendMessage("infoLog", review.toString());
 		return reviewService.mapToReviewDTO(review);
 	}
 
@@ -50,11 +59,14 @@ public class ReviewControllerContractImpl implements ReviewControllerContract {
 		Review review = reviewService.findByIdWithControl(id);
 		review.setScore(request.score());
 		review = reviewService.save(review);
+
+		kafkaProducerService.sendMessage("infoLog", review.toString());
 		return reviewService.mapToReviewDTO(review);
 	}
 
 	@Override
 	public void deleteReview(Long id) {
+		kafkaProducerService.sendMessage("infoLog", String.format("Review deleted with id: %s", id.toString()));
 		reviewService.delete(id);
 	}
 
