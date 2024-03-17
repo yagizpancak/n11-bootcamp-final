@@ -1,6 +1,7 @@
 package com.n11.userservice.controller;
 
 import com.n11.userservice.controller.contract.UserControllerContract;
+import com.n11.userservice.dto.RestaurantSuggestDTO;
 import com.n11.userservice.dto.UserDTO;
 import com.n11.userservice.general.RestResponse;
 import com.n11.userservice.request.UserSaveRequest;
@@ -17,6 +18,12 @@ public class UserController {
 
 	public UserController(UserControllerContract userControllerContract) {
 		this.userControllerContract = userControllerContract;
+	}
+
+	@GetMapping("/{id}/suggest-restaurant")
+	public ResponseEntity<RestResponse<List<RestaurantSuggestDTO>>> getRestaurantSuggestion(@PathVariable Long id){
+		List<RestaurantSuggestDTO> restaurants = userControllerContract.getRestaurantSuggestion(id);
+		return ResponseEntity.ok(RestResponse.of(restaurants));
 	}
 
 	@GetMapping

@@ -1,11 +1,13 @@
 package com.n11.userservice.controller.contract.impl;
 
 import com.n11.userservice.controller.contract.UserControllerContract;
+import com.n11.userservice.dto.RestaurantSuggestDTO;
 import com.n11.userservice.dto.UserDTO;
 import com.n11.userservice.entity.User;
 import com.n11.userservice.mapper.UserMapper;
 import com.n11.userservice.request.UserSaveRequest;
 import com.n11.userservice.request.UserUpdateRequest;
+import com.n11.userservice.service.SuggestionService;
 import com.n11.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import java.util.List;
 @Service
 public class UserControllerContractImpl implements UserControllerContract {
 	private final UserService userService;
+	private final SuggestionService suggestionService;
 	@Override
 	public UserDTO saveUser(UserSaveRequest userSaveRequest) {
 		User user = UserMapper.INSTANCE.convertToUser(userSaveRequest);
@@ -46,5 +49,11 @@ public class UserControllerContractImpl implements UserControllerContract {
 	@Override
 	public void deleteUser(Long id) {
 		userService.delete(id);
+	}
+
+	@Override
+	public List<RestaurantSuggestDTO> getRestaurantSuggestion(Long id) {
+		User user = userService.findByIdWithControl(id);
+		return suggestionService.getSuggestion(user);
 	}
 }

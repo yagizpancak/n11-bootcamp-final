@@ -1,8 +1,9 @@
 package com.n11.userservice.entity;
 
-import com.n11.userservice.enums.ReviewRate;
 import com.n11.userservice.general.BaseEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -32,9 +33,10 @@ public class Review extends BaseEntity {
 	private String restaurantId;
 
 	@NotNull
+	@Min(1)
+	@Max(5)
 	@Column(name = "SCORE", nullable = false)
-	@Enumerated(EnumType.STRING)
-	private ReviewRate score;
+	private Integer score;
 
 	@NotBlank
 	@Column(name = "TEXT", length = 1000)
