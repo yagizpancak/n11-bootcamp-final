@@ -5,9 +5,9 @@ After running the project you can access to SwaggerUI for API endpoints.
     http://{URL}:{PORT_NUMBER}/swagger-ui/index.html
 Examples:
 
-http://localhost:8081/swagger-ui/index.html (User Service)
+http://localhost:8081/swagger-ui.html (User Service)
 
-http://localhost:8080/swagger-ui/index.html (Restaurant service)
+http://localhost:8080/swagger-ui.html (Restaurant service)
 
 # To Run The Project
 
